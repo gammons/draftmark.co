@@ -58,6 +58,7 @@ end
 
 group :development do
   gem 'quiet_assets'
+  gem 'byebug'
 end
 
 group :production do
@@ -70,3 +71,7 @@ gem 'font-awesome-rails'
 gem 'bootstrap-sass'
 gem 'so_meta'
 gem 'local_time'
+
+gem 'dropbox-sdk'
+gem 'dotenv'
+gem 'devise'
