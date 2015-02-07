@@ -82,6 +82,8 @@ GEM
       sass (>= 3.3.0, < 3.5)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
+    haml (4.0.5)
+      tilt
     heroku-deflater (0.5.3)
       rack (>= 1.4.5)
     hike (1.2.3)
@@ -218,6 +220,7 @@ DEPENDENCIES
   dotenv
   dropbox-sdk
   foundation-rails
+  haml
   heroku-deflater
   jbuilder (~> 2.0)
   jquery-rails

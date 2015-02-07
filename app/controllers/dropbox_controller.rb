@@ -2,7 +2,6 @@ class DropboxController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    render text: "Yup you have found the index"
   end
 
   def authorize

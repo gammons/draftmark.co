@@ -1,6 +1,22 @@
 /*
  *= require_self
- */
+ //= require foundation_and_overrides
 
-@import "bootstrap";
-@import "font-awesome";
+ */
+@import "foundation_and_overrides";
+
+.docs { 
+  .columns {
+    height: 150px;
+
+    p.preview {
+      color: #ccc;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.8em;
+      
+    }
+
+  }
+}
