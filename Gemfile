@@ -58,7 +58,6 @@ end
 
 group :development do
   gem 'quiet_assets'
-  gem 'byebug'
 end
 
 group :production do
@@ -67,8 +66,7 @@ group :production do
 end
 
 gem 'unicorn'
-gem 'font-awesome-rails'
-gem 'bootstrap-sass'
+gem 'foundation-rails'
 gem 'so_meta'
 gem 'local_time'
 

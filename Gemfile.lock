@@ -37,15 +37,9 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.0)
-    autoprefixer-rails (5.1.0)
-      execjs
-      json
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-sass (3.3.3)
-      autoprefixer-rails (>= 5.0.0.1)
-      sass (>= 3.2.19)
     builder (3.2.2)
     byebug (3.5.1)
       columnize (~> 0.8)
@@ -83,8 +77,9 @@ GEM
     erubis (2.7.0)
     execjs (2.2.2)
     ffi (1.9.6)
-    font-awesome-rails (4.3.0.0)
-      railties (>= 3.2, < 5.0)
+    foundation-rails (5.5.1.0)
+      railties (>= 3.1.0)
+      sass (>= 3.3.0, < 3.5)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
     heroku-deflater (0.5.3)
@@ -216,14 +211,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-sass
   byebug
   capybara
   coffee-rails (~> 4.1.0)
   devise
   dotenv
   dropbox-sdk
-  font-awesome-rails
+  foundation-rails
   heroku-deflater
   jbuilder (~> 2.0)
   jquery-rails
