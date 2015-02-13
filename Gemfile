@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "2.1.1"
+ruby "2.2.0"
 
 
 
@@ -73,3 +73,4 @@ gem 'dotenv'
 gem 'devise'
 gem 'haml'
 gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
+gem 'lodash-rails'
