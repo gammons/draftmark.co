@@ -8,8 +8,12 @@ class DropboxSyncWorker
       @attrs = arr[1]
     end
 
+    def deleted?
+      @attrs.nil?
+    end
+
     def dir?
-      @attrs["is_dir"]
+      @attrs.nil? ? false : @attrs["is_dir"]
     end
 
     def mtime
@@ -18,14 +22,17 @@ class DropboxSyncWorker
   end
 
   def perform(user:, client:)
-    @delta = client.delta(user.dropbox_cursor)
     done = false
 
     while !done
+      @delta = client.delta(user.dropbox_cursor)
       @delta["entries"].each do |entry|
         entry = DropboxEntry.new(entry)
-        next if entry.dir?
+        next if entry.dir? || !entry.path.ends_with?(".md")
+
         note = user.notes.where(path: entry.path).first
+        note.destroy and return if entry.deleted?
+
         file = client.get_file_and_metadata(entry.path)
 
         if note

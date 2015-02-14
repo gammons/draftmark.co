@@ -5,6 +5,7 @@
 # below each fixture, per the syntax in the comments below
 #
 bob:
+  id: 1
   email: "bill@bill.com"
   encrypted_password: "two3four"
 

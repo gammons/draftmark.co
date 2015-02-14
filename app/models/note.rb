@@ -5,6 +5,6 @@ class Note < ActiveRecord::Base
   private
 
   def set_title
-    title = content.split("\n")[0].gsub(/# /,'')
+    self.title = content.split("\n")[0].gsub(/# /,'')
   end
 end
