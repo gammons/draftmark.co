@@ -8,7 +8,7 @@ require "minitest/rails"
 # require "minitest/rails/capybara"
 
 # Uncomment for awesome colorful output
-# require "minitest/pride"
+require "minitest/pride"
 
 class ActiveSupport::TestCase
     ActiveRecord::Migration.check_pending!
@@ -20,4 +20,14 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  extend MiniTest::Spec::DSL
+end
+
+# Setup VCR
+
+require 'vcr'
+
+VCR.configure do |config|
+  config.cassette_library_dir = "fixtures/vcr_cassettes"
+  config.hook_into :webmock # or :fakeweb
 end

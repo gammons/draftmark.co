@@ -53,7 +53,9 @@ group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
   gem 'minitest-rails'
+  gem 'minitest-spec-rails'
   gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do
