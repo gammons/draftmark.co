@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require lodash
+//= require director.min
+//= require marked
 //= require foundation
 //= require react
 //= require react_ujs

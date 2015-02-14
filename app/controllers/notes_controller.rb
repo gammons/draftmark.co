@@ -5,7 +5,16 @@ class NotesController < ApplicationController
     respond_to do |format|
       format.json do 
         @notes = current_user.notes.limit(50)
-        render json: @notes
+        render json: @notes, each_serializer: NoteListSerializer, root: false
+      end
+    end
+  end
+
+  def content
+    respond_to do |format|
+      format.json do 
+        @notes = current_user.notes.find(params[:id])
+        render json: @notes, serializer: NoteContentSerializer, root: false
       end
     end
   end

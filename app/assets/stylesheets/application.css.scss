@@ -5,6 +5,11 @@
  */
 @import "foundation_and_overrides";
 
+.note {
+  border: 1px solid #ccc;
+  height: 150px;
+}
+
 .docs { 
   .columns {
     height: 150px;
