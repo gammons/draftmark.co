@@ -31,7 +31,10 @@ class DropboxSyncWorker
         next if entry.dir? || !entry.path.ends_with?(".md")
 
         note = user.notes.where(path: entry.path).first
-        note.destroy and return if entry.deleted?
+        if entry.deleted?
+          note.destroy if note
+          next
+        end
 
         file = client.get_file_and_metadata(entry.path)
 

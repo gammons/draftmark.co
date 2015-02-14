@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150214144451) do
+ActiveRecord::Schema.define(version: 20150214195950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20150214144451) do
     t.datetime "mtime"
   end
 
+  add_index "notes", ["path", "user_id"], name: "index_notes_on_path_and_user_id", using: :btree
   add_index "notes", ["user_id"], name: "index_notes_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -43,8 +44,10 @@ ActiveRecord::Schema.define(version: 20150214144451) do
     t.datetime "updated_at"
     t.string   "dropbox_access_token"
     t.string   "dropbox_cursor"
+    t.integer  "dropbox_user_id"
   end
 
+  add_index "users", ["dropbox_user_id"], name: "index_users_on_dropbox_user_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 

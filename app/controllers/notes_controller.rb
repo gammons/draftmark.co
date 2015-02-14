@@ -4,7 +4,7 @@ class NotesController < ApplicationController
   def index
     respond_to do |format|
       format.json do 
-        @notes = current_user.notes.limit(50)
+        @notes = current_user.notes.order("mtime desc").limit(50)
         render json: @notes, each_serializer: NoteListSerializer, root: false
       end
     end

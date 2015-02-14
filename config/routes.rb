@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   get "/authorize" => "dropbox#authorize"
   get "/redirect" => "dropbox#redirect"
+  get "/webhook" => "dropbox#webhook_challenge"
+  post "/webhook" => "dropbox#webhook"
 
   resources :notes do
     member do

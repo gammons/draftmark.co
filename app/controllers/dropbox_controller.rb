@@ -1,5 +1,6 @@
 class DropboxController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:webhook, :webhook_challenge]
+  protect_from_forgery except: :webhook
 
   def index
   end
@@ -12,7 +13,9 @@ class DropboxController < ApplicationController
   def redirect
     begin
       access_token, user_id, url_state = web_auth.finish(params)
-      current_user.update_attributes(dropbox_access_token: access_token)
+      client = DropboxClient.new(access_token)
+      dropbox_user_id = client.account_info["uid"]
+      current_user.update_attributes(dropbox_access_token: access_token, dropbox_user_id: dropbox_user_id)
       redirect_to action: :index
     rescue DropboxOAuth2Flow::BadRequestError => e
       render text: "<p>Bad request to /dropbox-auth-finish: #{e}</p>"
@@ -28,6 +31,19 @@ class DropboxController < ApplicationController
     rescue DropboxError => e
       render text: "<p>Error getting access token</p>"
     end
+  end
+
+  def webhook_challenge
+    render text: params[:challenge]
+  end
+
+  def webhook
+    params[:delta][:users].each do |id|
+      user = User.find_by_dropbox_user_id(id)
+      client = DropboxClient.new(user.dropbox_access_token)
+      DropboxSyncWorker.new.perform(user: user, client: client)
+    end
+    render nothing: true
   end
 
   private
