@@ -52,6 +52,8 @@ end
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
+  gem 'minitest-rails'
+  gem 'vcr'
 end
 
 group :development do
