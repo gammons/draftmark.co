@@ -16,10 +16,10 @@ var NoteView = React.createClass({
     });
   },
   render: function() {
-    console.log("content =", this.state.content);
     var rawMarkup = marked(this.state.content.toString());
     return(
       <div>
+        <a href="#">Back to notes list</a>
         <span dangerouslySetInnerHTML={{__html: rawMarkup}} />
       </div>
     );
