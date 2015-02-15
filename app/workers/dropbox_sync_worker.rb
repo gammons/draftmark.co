@@ -23,6 +23,7 @@ class DropboxSyncWorker
 
   def perform(user:, client:)
     done = false
+    changed = false
 
     while !done
       @delta = client.delta(user.dropbox_cursor)
@@ -32,18 +33,23 @@ class DropboxSyncWorker
 
         note = user.notes.where(path: entry.path).first
         if entry.deleted?
-          note.destroy if note
+          if note
+            note.destroy
+            changed = true
+          end
           next
         end
 
+        changed = true
         file = client.get_file_and_metadata(entry.path)
-
         if note
           note.update_attributes(content: file[0], path: entry.path, mtime: entry.mtime)
         else
           user.notes.create(content: file[0], path: entry.path, mtime: entry.mtime)
         end
       end
+
+      Pusher['updates'].trigger('update', { message: 'yup' }) if changed
 
       user.update_attributes(dropbox_cursor: @delta["cursor"])
       done = !@delta["has_more"]

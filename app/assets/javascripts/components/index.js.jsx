@@ -4,18 +4,31 @@ var IndexView = React.createClass({
   },
 
   componentDidMount: function() {
+    this.getData(function(data) {
+      this.setState({notes: data});
+      this.setupRouter();
+    }.bind(this));
+    this.setupPusher();
+  },
 
-    var _this = this;
+  setupPusher: function() {
+    this.setState({pusher: new Pusher('2cdc6bc2a2113ae973d8') })
+    var channel = this.state.pusher.subscribe('updates');
+    channel.bind('update', function(data) {
+      this.getData(function(data) {
+        this.setState({notes: data});
+      }.bind(this));
+    }.bind(this));
+  },
+
+  getData: function(successFn) {
     $.ajax({
       url: "/notes.json",
       dataType: 'json',
-      success: function(data) {
-        this.setState({notes: data, view:  this.state.view});
-        this.setupRouter();
-      }.bind(this),
+      success: successFn,
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
-      }.bind(this)
+      }
     });
   },
 
@@ -31,14 +44,15 @@ var IndexView = React.createClass({
   },
   indexView: function() {
     console.log("route to indexView");
-    this.setState({notes: this.state.notes, router: this.state.router, view: "index"});
+    this.setState({view: "index"});
   },
   viewNoteView: function(id) {
     console.log("route to noteView");
-    this.setState({notes: this.state.notes, router: this.state.router, view: "note", selectedNoteId: id});
+    this.setState({view: "note", selectedNoteId: id});
   },
 
   render: function() {
+    console.log("index render");
     if (this.state.view == 'index') {
       return this.renderIndex();
     } else if (this.state.view == 'note') {
@@ -69,7 +83,7 @@ var IndexView = React.createClass({
   renderNote: function() {
     var selectedNote = this.getNote(this.state.selectedNoteId);
     return (
-      <NoteView id={selectedNote.id} title={selectedNote.title} content={selectedNote.content} />
+      <NoteView id={selectedNote.id} title={selectedNote.title} pusher={this.state.pusher} />
     );
   },
   getNote: function(id) {
