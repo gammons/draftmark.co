@@ -82,3 +82,4 @@ gem 'marked-rails'
 gem 'sidekiq'
 gem 'active_model_serializers'
 gem 'pusher'
+gem 'sinatra', :require => nil
