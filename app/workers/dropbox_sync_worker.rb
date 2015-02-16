@@ -21,7 +21,9 @@ class DropboxSyncWorker
     end
   end
 
-  def perform(user:, client:)
+  def perform(user_id:, client: nil)
+    user = User.find user_id
+    client ||= DropboxClient.new(user.dropbox_access_token)
     done = false
     changed = false
 
