@@ -43,16 +43,13 @@ var IndexView = React.createClass({
     this.setState({notes: this.state.notes, router: router});
   },
   indexView: function() {
-    console.log("route to indexView");
     this.setState({view: "index"});
   },
   viewNoteView: function(id) {
-    console.log("route to noteView");
     this.setState({view: "note", selectedNoteId: id});
   },
 
   render: function() {
-    console.log("index render");
     if (this.state.view == 'index') {
       return this.renderIndex();
     } else if (this.state.view == 'note') {
@@ -83,7 +80,9 @@ var IndexView = React.createClass({
   renderNote: function() {
     var selectedNote = this.getNote(this.state.selectedNoteId);
     return (
+      <div className="view-note">
       <NoteView id={selectedNote.id} title={selectedNote.title} pusher={this.state.pusher} />
+      </div>
     );
   },
   getNote: function(id) {
