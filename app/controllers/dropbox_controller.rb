@@ -53,6 +53,6 @@ class DropboxController < ApplicationController
 
   def perform_sync(user: current_user)
     client = DropboxClient.new(user.dropbox_access_token)
-    DropboxSyncWorker.new.perform_async(user: user, client: client)
+    DropboxSyncWorker.perform_async(user: user, client: client)
   end
 end
