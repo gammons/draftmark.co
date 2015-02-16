@@ -27,9 +27,11 @@ var NoteView = React.createClass({
   render: function() {
     var rawMarkup = marked(this.state.content.toString());
     return(
-      <div className="view-note">
-        <a href="#">Back to notes list</a>
-        <span dangerouslySetInnerHTML={{__html: rawMarkup}} />
+      <div className="row">
+        <div className="large-12 columns">
+          <a href="#">Back to notes list</a>
+          <span dangerouslySetInnerHTML={{__html: rawMarkup}} />
+        </div>
       </div>
     );
   }
