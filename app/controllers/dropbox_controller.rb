@@ -40,7 +40,7 @@ class DropboxController < ApplicationController
 
   def webhook
     params[:delta][:users].each do |id|
-      perform_async(user: User.find_by_dropbox_user_id(id))
+      perform_sync(user: User.find_by_dropbox_user_id(id))
     end
     render nothing: true
   end
