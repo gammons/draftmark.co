@@ -16,6 +16,7 @@ class DropboxController < ApplicationController
       client = DropboxClient.new(access_token)
       dropbox_user_id = client.account_info["uid"]
       current_user.update_attributes(dropbox_access_token: access_token, dropbox_user_id: dropbox_user_id)
+      perform_sync
       redirect_to action: :index
     rescue DropboxOAuth2Flow::BadRequestError => e
       render text: "<p>Bad request to /dropbox-auth-finish: #{e}</p>"
@@ -39,9 +40,7 @@ class DropboxController < ApplicationController
 
   def webhook
     params[:delta][:users].each do |id|
-      user = User.find_by_dropbox_user_id(id)
-      client = DropboxClient.new(user.dropbox_access_token)
-      DropboxSyncWorker.new.perform(user: user, client: client)
+      perform_async(user: User.find_by_dropbox_user_id(id))
     end
     render nothing: true
   end
@@ -50,5 +49,10 @@ class DropboxController < ApplicationController
 
   def web_auth
     DropboxOAuth2Flow.new(ENV['DROPBOX_KEY'], ENV['DROPBOX_SECRET'], redirect_url, session, :dropbox_auth_csrf_token)
+  end
+
+  def perform_sync(user: current_user)
+    client = DropboxClient.new(user.dropbox_access_token)
+    DropboxSyncWorker.new.perform_async(user: user, client: client)
   end
 end
