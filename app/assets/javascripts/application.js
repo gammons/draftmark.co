@@ -16,11 +16,14 @@
 //= require director.min
 //= require pusher.min
 //= require marked
+//= require highlight.pack
 //= require foundation
 //= require react
 //= require react_ujs
 //= require components
 //= require_tree .
+//
 //= require init
+//= require init_highlightjs
 
 $(function(){ $(document).foundation(); });

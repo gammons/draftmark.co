@@ -1,9 +1,24 @@
 /*
  *= require_self
  //= require foundation_and_overrides
+ //= require ../../../vendor/assets/stylesheets/styles/solarized_dark
 
  */
 @import "foundation_and_overrides";
+
+// Override a couple things that foundation puts in
+pre {
+  background-color: #002b36 !important;
+  padding: 10px !important;
+}
+
+code {
+  border-style: none !important;
+  background-color: rgba(0,0,0,0) !important;
+  padding: 0 !important;
+  color: #839496 !important;
+
+}
 
 .note {
   border: 1px solid #ccc;
